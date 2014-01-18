@@ -8,7 +8,7 @@ $(function(){
 	var api = google.maps,
 
 	/* Now create an object literal with the configuration options */
-		mapCenter = new api.LatLng(50.91710, -1.40419),
+		mapCenter = new api.LatLng(39.74000, -104.99230),
 		mapOptions = {
 			zoom: 13,
 			center: mapCenter,
