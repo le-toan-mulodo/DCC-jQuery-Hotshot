@@ -28,6 +28,7 @@ $(function(){
 		/* Lastly, create an empty array literal that'll get populated later when we store ares of the map that have been clicked on. This needs to be at the top so that we can access ti from within different event handlers later on */
 		positions = [];
 
+
 /* Here, we add the custom marker to the map */
 
 var homeMarker = new api.Marker({
@@ -46,7 +47,7 @@ var infoWindow = new api.InfoWindow({
 
 /* This is a simple click handler that displays the info window. It gets passed the infoWindow variable we just created above - page 65*/
 
-    google.maps.event.addListener(homeMarker, "click", function () {
+    api.event.addListener(homeMarker, "click", function () {
         infoWindow.open(map, homeMarker);
     });
 
@@ -58,7 +59,7 @@ var addMarker = function(e) {
 
 /* if the clicks are less than (or equal to) zero, we'll create a new marker using the Marker() constructor */
 
-if (clicks <= 1){
+if (clicks <= 1) {
 	positions.push(e.latLng);
 
 	var marker = new api.Marker({
@@ -86,7 +87,7 @@ if (clicks <= 1){
 			api.event.removeListener(mapClick);
 			return false;
 	}
-}
+};
 
 var mapClick = api.event.addListener(map, "click", addMarker);
 
@@ -95,7 +96,7 @@ added our click events, using Google's addListener() method. Explanation on page
 
 api.event.addListener(map, "locationAdd", function (e) {
 
-	var journeyEl = ("#journey"),
+	var journeyEl = $("#journey"),
 
 	/* The next variable we set is then one of two things. If the jQuery object we set as the first
 variable has length, we know the journey element exists on the page, so we just store a
@@ -106,7 +107,7 @@ set its id to journey. */
 		});
 
 	new api.Geocoder().geocode({
-			"latLng": e.latlng },
+			"latLng": e.latLng },
 			function (results) {
 
 				$("<h3 />", {
@@ -125,12 +126,15 @@ set its id to journey. */
 				if (!journeyEl.length){
 					outer.appendTo(ui);
 
-				} else {
+				}
+                else {
 					$("<button/ >", {
 							id: "getQuote",
 							text: "Get quote"
-					}).prop("disabled", true).appendTo(journeyEl);
-				}
+					})
+                    .prop("disabled", true)
+                    .appendTo(journeyEl);
+			}
 			clicks++;
 	});
 });
@@ -141,8 +145,12 @@ set its id to journey. */
         var elId = ["#", this.get("id"), "Point"].join("");
 
         //reverse geocode latlng to get address of place marker dragged to
-        new api.Geocoder().geocode({ "latLng": e.latLng }, function (results) {
-            $(elId).text(results[0].formatted_address);
+        new api.Geocoder().geocode({
+            "latLng": e.latLng
+            }, function (results) {
+
+            $(elId).text(results[0]
+                .formatted_address);
         });
     };
 
@@ -155,7 +163,7 @@ set its id to journey. */
         var field = $(this),
             enableButton = function () {
                 if (field.val()) {
-                    $("#getQuote").prop("disabled", false);
+                    $("#getQuote").removeProp("disabled");
                 } else {
                     $("#getQuote").prop("disabled", true);
                 }
@@ -215,21 +223,7 @@ set its id to journey. */
         });
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
+
+
 
