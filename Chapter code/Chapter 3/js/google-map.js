@@ -37,7 +37,7 @@
 
             //store latLng
             positions.push(e.latLng);
-            
+
             //add marker
             var marker = new api.Marker({
                 map: map,
@@ -91,7 +91,8 @@
                 $("<button />", {
                     id: "getQuote",
                     text: "Get quote"
-                }).prop("disabled", true).appendTo(journeyEl);
+                }).prop("disabled", true)
+                .appendTo(journeyEl);
             }
 
             clicks++;
@@ -134,6 +135,8 @@
         $(this).remove();
 
         //get distance between points
+
+        /* ADDED .getDistanceMatrix() */
         new api.DistanceMatrixService().getDistanceMatrix({
             origins: [$("#startPoint").attr("data-latLng")],
             destinations: [$("#endPoint").attr("data-latLng")],
@@ -147,9 +150,9 @@
                 }),
                 format = function (number) {
 
-                    var rounded = Math.round(number * 100) / 100,                        
+                    var rounded = Math.round(number * 100) / 100,
                         fixed = rounded.toFixed(2);
-                        
+
                     return fixed;
                 },
                 term = $("<dt/>"),

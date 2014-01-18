@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
 
 	/* Here, we create variables that will instantiate the map. var api = google.maps sets the namespace for use later down the line. We'll be referencing it a lot */
 
@@ -47,9 +47,9 @@ var infoWindow = new api.InfoWindow({
 
 /* This is a simple click handler that displays the info window. It gets passed the infoWindow variable we just created above - page 65*/
 
-    api.event.addListener(homeMarker, "click", function () {
-        infoWindow.open(map, homeMarker);
-    });
+api.event.addListener(homeMarker, "click", function () {
+    infoWindow.open(map, homeMarker);
+});
 
 /* Now we'll add the event listeners. This first one  will be a function that is executed when the map is clicked. explanation on page 68*/
 
@@ -60,32 +60,31 @@ var addMarker = function(e) {
 /* if the clicks are less than (or equal to) zero, we'll create a new marker using the Marker() constructor */
 
 if (clicks <= 1) {
-	positions.push(e.latLng);
+positions.push(e.latLng);
 
-	var marker = new api.Marker({
-			map: map,
-			position: e.latLng,
+var marker = new api.Marker({
+		map: map,
+		position: e.latLng,
 
-	/* These ternary operators are checking to see if anything has been clicked before */
-			flat: (clicks === 0) ? true : false,
-			animation: api.Animation.DROP,
-			title: (clicks === 0) ? "Start" : "End",
-	/* this sets the green marker for the first click*/
-			icon: (clicks === 0) ? "img/start.png" : "",
-	/* set the markers so that we can drag them */
-			draggable: true,
-			id: (clicks === 0) ? "Start" : "End"
+/* These ternary operators are checking to see if anything has been clicked before */
+		flat: (clicks === 0) ? true : false,
+		animation: api.Animation.DROP,
+		title: (clicks === 0) ? "Start" : "End",
+/* this sets the green marker for the first click*/
+		icon: (clicks === 0) ? "img/start.png" : "",
+/* set the markers so that we can drag them */
+		draggable: true,
+		id: (clicks === 0) ? "Start" : "End"
 	});
 
-	/* THIS CALL IS NOT IN THE BOOK OR THE PDF */
 
   api.event.addListener(marker, "dragend", markerDrag);
 
 	api.event.trigger(map, "locationAdd", e);
 /* if the clicks are larger than zero, remove the event listener */
 	} else {
-			api.event.removeListener(mapClick);
-			return false;
+		api.event.removeListener(mapClick);
+		return false;
 	}
 };
 
@@ -106,38 +105,39 @@ set its id to journey. */
 			id: "journey"
 		});
 
-	new api.Geocoder().geocode({
-			"latLng": e.latLng },
-			function (results) {
+new api.Geocoder().geocode({
+		"latLng": e.latLng },
+		function (results) {
 
-				$("<h3 />", {
-					text: (clicks === 0) ? "Start:" : "End:"
-				}).appendTo(outer);
+			$("<h3 />", {
+				text: (clicks === 0) ? "Start:" : "End:"
+			}).appendTo(outer);
 
-				$("<p />", {
-					text: results[0].formatted_address,
-					id: (clicks === 0) ? "StartPoint" : "EndPoint",
-					"data-latLng" : e.latLng
+			$("<p />", {
+				text: results[0].formatted_address,
+				id: (clicks === 0) ? "StartPoint" : "EndPoint",
+				"data-latLng" : e.latLng
 
-				}).appendTo(outer);
+			}).appendTo(outer);
 
 		/* if the journey does not exist append it to the ui, if it does exist create the button and set it's properties and add it to journey */
 
-				if (!journeyEl.length){
-					outer.appendTo(ui);
+            if (!journeyEl.length) {
+                outer.appendTo(ui);
+            } else {
+                //add button if second click
+                $("<button />", {
+                    id: "getQuote",
+                    text: "Get quote"
+                })
+                .prop("disabled", true)
+                .appendTo(journeyEl);
+            }
 
-				}
-                else {
-					$("<button/ >", {
-							id: "getQuote",
-							text: "Get quote"
-					})
-                    .prop("disabled", true)
-                    .appendTo(journeyEl);
-			}
-			clicks++;
-	});
-});
+            clicks++;
+        });
+
+    });
 
     //handle markers being dragged
     var markerDrag = function (e) {
@@ -145,14 +145,11 @@ set its id to journey. */
         var elId = ["#", this.get("id"), "Point"].join("");
 
         //reverse geocode latlng to get address of place marker dragged to
-        new api.Geocoder().geocode({
-            "latLng": e.latLng
-            }, function (results) {
-
-            $(elId).text(results[0]
-                .formatted_address);
+        new api.Geocoder().geocode({ "latLng": e.latLng }, function (results) {
+            $(elId).text(results[0].formatted_address);
         });
     };
+
 
     //enable button when weight entered
     $("#weight").on("keyup", function () {
@@ -163,7 +160,7 @@ set its id to journey. */
         var field = $(this),
             enableButton = function () {
                 if (field.val()) {
-                    $("#getQuote").removeProp("disabled");
+                    $("#getQuote").prop("disabled", false);
                 } else {
                     $("#getQuote").prop("disabled", true);
                 }
@@ -178,7 +175,7 @@ set its id to journey. */
         $(this).remove();
 
         //get distance between points
-        new api.DistanceMatrixService().getDistanceMatrix({
+         new api.DistanceMatrixService().getDistanceMatrix({
             origins: [$("#startPoint").attr("data-latLng")],
             destinations: [$("#endPoint").attr("data-latLng")],
             travelMode: google.maps.TravelMode.DRIVING,
