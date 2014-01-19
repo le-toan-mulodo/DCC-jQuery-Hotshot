@@ -91,7 +91,8 @@
                 $("<button />", {
                     id: "getQuote",
                     text: "Get quote"
-                }).prop("disabled", true)
+                })
+                .prop("disabled", true)
                 .appendTo(journeyEl);
             }
 
