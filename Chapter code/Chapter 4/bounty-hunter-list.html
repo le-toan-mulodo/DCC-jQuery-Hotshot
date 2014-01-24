@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html> 
-<html> 
-	<head> 
-	    <title>Bounty Hunter jQuery Mobile App</title> 
-	    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	    <title>Bounty Hunter jQuery Mobile App</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
         <link rel="stylesheet" href="css/bounty-hunter.css" />
 	    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	    <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
         <script src="//borismoore.github.com/jsrender/jsrender.js"></script>
-    </head> 
-<body> 
+    </head>
+<body>
     <div data-role="page" id="list">
 
 	    <div data-role="header" data-position="fixed">
@@ -23,7 +23,7 @@
                 <h2>Page <span class="num"></span> of <span class="of"></span></h2>
                 <a href="#" data-role="button" data-icon="forward" data-iconpos="right" data-inline="true" data-mini="true" class="ui-disabled">Next</a>
             </div>
-            
+
             <div id="results"></div>
 
             <div class="ui-bar ui-bar-c footer-bar">
@@ -50,7 +50,7 @@
                             <h1 class="title">{{:title}}</h1>
                             <div class="meta">
                                 <span>Answers: <span class="value">{{:answer_count}}</span></span>
-                                <span class="activity">Last activity on: <span class="value">{{:~CreateDate(last_activity_date)}}</span></span> 
+                                <span class="activity">Last activity on: <span class="value">{{:~CreateDate(last_activity_date)}}</span></span>
                             </div>
                         </a>
                     </li>
@@ -74,7 +74,7 @@
                         <div class="meta">
                             <span>Asked on: <span class="value">{{:~CreateDate(creation_date)}}</span></span>
                             <span>Answers: <span class="value">{{:answer_count}}</span></span>
-                            <span class="activity">Last activity on: <span class="value">{{:~CreateDate(last_activity_date)}}</span></span> 
+                            <span class="activity">Last activity on: <span class="value">{{:~CreateDate(last_activity_date)}}</span></span>
                         </div>
                         <h1 class="title">{{:title}}</h1>
                         <ul class="tags">
