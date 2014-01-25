@@ -88,15 +88,17 @@ $(document).on("pageinit", "#list", function(){
             cDate.getDate(), months[cDate.getMonth()],
             cDate.getFullYear()
           ].join(" ");
+
           return fDate;
         }
 
-        $.views.helpers({ CreateDate: CreateDate});
+        $.views.helpers({ CreateDate: createDate});
 
         $("#results").append($("#listTemplate")
                     .render(data))
                     .find("ul")
                     .listview();
+
       var setClasses = function (){
         if (data.currentPage > 1) {
           $("a[data-icon='back']").removeClass("ui-disabled");
@@ -116,8 +118,28 @@ $(document).on("pageinit", "#list", function(){
   if (totalPages > 1) {
   $("a[data-icon='forward']").removeClass('ui-disabled');
   }
-  // PAGE 103 - page 116
+
 });
+
+  // PAGE 111 - page 128
+
+  $("results").on("click", "li", function (){
+
+  var index = $(this).find("a").attr("id").split("-")[1],
+    question = data.items[index];
+
+    question.pageid = "item-view-" + index;
+
+    $("body").append($("#itemTemplate").render(question));
+
+    var page = $("#item-view-" + index);
+
+    page.attr("data-external-page", true).on("pageinit", $.mobile._bindPageRemove);
+    $.mobile.changePage(page, {
+      transition: "slide"
+    });
+
+  });
 
 	//
 } ());
