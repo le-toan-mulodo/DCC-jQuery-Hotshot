@@ -1,4 +1,9 @@
-$(document).ready(){
+;(function ($) {
 
-	//
-});
+
+
+	// the codez
+
+
+
+}(jQuery));
